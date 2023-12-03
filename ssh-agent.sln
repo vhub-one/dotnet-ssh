@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34316.72
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ssh", "src\Ssh\Ssh.csproj", "{9EEA21BA-770C-4EB4-810E-083D4FDF8363}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ssh", "Ssh", "{5843030C-F739-445D-8E06-6EA2E66E84A1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SshAgent", "SshAgent", "{17729F04-7ECF-41F8-A3EF-F1D00242A22B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SshAgent", "src\SshAgent\SshAgent.csproj", "{40EC0D6A-275B-4A3E-92A5-57C1D34B4826}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SshAgent.Transport.Pipe", "src\SshAgent.Transport.Pipe\SshAgent.Transport.Pipe.csproj", "{F5C4A634-03AB-4383-A431-9EBA3DA036F8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{C4418523-8936-4059-AB10-FF08AA7C0871}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "modules\dotnet-common\src\Common\Common.csproj", "{19F1B9C5-22A2-48C8-94D2-D656C17D4D3C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9EEA21BA-770C-4EB4-810E-083D4FDF8363}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9EEA21BA-770C-4EB4-810E-083D4FDF8363}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9EEA21BA-770C-4EB4-810E-083D4FDF8363}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9EEA21BA-770C-4EB4-810E-083D4FDF8363}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40EC0D6A-275B-4A3E-92A5-57C1D34B4826}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40EC0D6A-275B-4A3E-92A5-57C1D34B4826}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40EC0D6A-275B-4A3E-92A5-57C1D34B4826}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40EC0D6A-275B-4A3E-92A5-57C1D34B4826}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5C4A634-03AB-4383-A431-9EBA3DA036F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5C4A634-03AB-4383-A431-9EBA3DA036F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5C4A634-03AB-4383-A431-9EBA3DA036F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5C4A634-03AB-4383-A431-9EBA3DA036F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19F1B9C5-22A2-48C8-94D2-D656C17D4D3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19F1B9C5-22A2-48C8-94D2-D656C17D4D3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19F1B9C5-22A2-48C8-94D2-D656C17D4D3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19F1B9C5-22A2-48C8-94D2-D656C17D4D3C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9EEA21BA-770C-4EB4-810E-083D4FDF8363} = {5843030C-F739-445D-8E06-6EA2E66E84A1}
+		{40EC0D6A-275B-4A3E-92A5-57C1D34B4826} = {17729F04-7ECF-41F8-A3EF-F1D00242A22B}
+		{F5C4A634-03AB-4383-A431-9EBA3DA036F8} = {17729F04-7ECF-41F8-A3EF-F1D00242A22B}
+		{19F1B9C5-22A2-48C8-94D2-D656C17D4D3C} = {C4418523-8936-4059-AB10-FF08AA7C0871}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {22555449-9889-4B8F-B924-64B044B3208F}
+	EndGlobalSection
+EndGlobal
