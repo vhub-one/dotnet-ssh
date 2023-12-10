@@ -5,11 +5,11 @@ using System.Security.Principal;
 
 namespace SshAgent.Transport.Pipe
 {
-    public class SshAgentPipeConnectionFactory : ISshAgentConnectionFactory
+    public class PipeSshAgentConnectionFactory : ISshAgentConnectionFactory
     {
-        private readonly IOptions<SshAgentPipeOptions> _optionsAccessor;
+        private readonly IOptions<PipeSshAgentConnectionFactoryOptions> _optionsAccessor;
 
-        public SshAgentPipeConnectionFactory(IOptions<SshAgentPipeOptions> optionsAccessor)
+        public PipeSshAgentConnectionFactory(IOptions<PipeSshAgentConnectionFactoryOptions> optionsAccessor)
         {
             _optionsAccessor = optionsAccessor;
         }
@@ -21,7 +21,7 @@ namespace SshAgent.Transport.Pipe
             if (pipeOptions == null ||
                 pipeOptions.PipeName == null)
             {
-                throw new InvalidOperationException("Configuration for SshAgentPipeConnectionFactory is missing");
+                throw new InvalidOperationException("Configuration for PipeSshAgentConnectionFactory is missing");
             }
 
             var pipeUser = WindowsIdentity.GetCurrent();
