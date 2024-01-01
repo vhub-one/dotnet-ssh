@@ -9,12 +9,12 @@ namespace SshAgent
     public class SshAgentService
     {
         private readonly ISshAgent _agent;
-        private readonly ISshAgentConnectionFactory _agentConnectionFactory;
+        private readonly ISshAgentHostConnectionFactory _agentConnectionFactory;
         private readonly ILogger<SshAgentService> _logger;
 
         private readonly TimeSpan _timeout = TimeSpan.FromMinutes(1);
 
-        public SshAgentService(ISshAgent agent, ISshAgentConnectionFactory agentConnectionFactory, ILogger<SshAgentService> logger)
+        public SshAgentService(ISshAgent agent, ISshAgentHostConnectionFactory agentConnectionFactory, ILogger<SshAgentService> logger)
         {
             _agent = agent;
             _agentConnectionFactory = agentConnectionFactory;
@@ -50,7 +50,7 @@ namespace SshAgent
             }
         }
 
-        private async Task RunConnectionHandlerAsync(ISshAgentConnection connection, CancellationToken token)
+        private async Task RunConnectionHandlerAsync(ISshAgentHostConnection connection, CancellationToken token)
         {
             _logger.LogInformation("> client connected");
 

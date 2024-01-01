@@ -1,0 +1,25 @@
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Debug",
+      "Microsoft": "Warning",
+      "System": "Warning"
+    }
+  },
+  "PipeSshAgentClientOptions": {
+    "PipeName": "openssh-ssh-agent"
+  },
+  "SocketSshAgentClientOptions": {
+    "Host": "localhost",
+    "Port": 30022
+  },
+  "SshAgentProxyOptions": {
+    "SshAgentsOrder": [
+      "SocketSshAgentClient",
+      "PipeSshAgentClient"
+    ]
+  },
+  "PipeSshAgentHostConnectionFactoryOptions": {
+    "PipeName": "proxy-ssh-agent"
+  }
+}

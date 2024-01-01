@@ -1,20 +1,11 @@
 ﻿using Common.Buffers;
-using Microsoft.Extensions.Options;
 using SshAgent.Contract;
 using System.Buffers;
-using System.IO.Pipes;
 
-namespace SshAgent.Transport.Pipe
+namespace SshAgent.Transport
 {
-    public class PipeSshAgent : ISshAgent
+    public abstract class StreamSshAgentClient : ISshAgent
     {
-        private readonly IOptions<PipeSshAgentOptions> _optionsAccessor;
-
-        public PipeSshAgent(IOptions<PipeSshAgentOptions> options)
-        {
-            _optionsAccessor = options;
-        }
-
         public async ValueTask<IdentitiesReply> RequestIdentitiesAsync(CancellationToken token)
         {
             var message = new AgentMessage
@@ -23,7 +14,7 @@ namespace SshAgent.Transport.Pipe
                 Message = ReadOnlyMemory<byte>.Empty
             };
 
-            async ValueTask<IdentitiesReply> RequestIdentitiesInternalAsync(SshAgentStreamConnection connection)
+            async ValueTask<IdentitiesReply> RequestIdentitiesInternalAsync(StreamSshAgentHostConnection connection)
             {
                 await connection.WriteMessageAsync(message, token);
 
@@ -48,7 +39,7 @@ namespace SshAgent.Transport.Pipe
                 Message = messageWriter.WrittenMemory
             };
 
-            async ValueTask<SignReply> SignInternalAsync(SshAgentStreamConnection connection)
+            async ValueTask<SignReply> SignInternalAsync(StreamSshAgentHostConnection connection)
             {
                 await connection.WriteMessageAsync(message, token);
 
@@ -61,21 +52,21 @@ namespace SshAgent.Transport.Pipe
             return await WithConnection(SignInternalAsync, token);
         }
 
-        private async ValueTask<TReply> WithConnection<TReply>(Func<SshAgentStreamConnection, ValueTask<TReply>> requestFunc, CancellationToken token)
-        {
-            var options = _optionsAccessor.Value;
+        protected abstract ValueTask<TReply> WithConnection<TReply>(Func<StreamSshAgentHostConnection, ValueTask<TReply>> requestFunc, CancellationToken token);
+        //{
+        //    var options = _optionsAccessor.Value;
 
-            if (options == null ||
-                options.PipeName == null)
-            {
-                throw new InvalidOperationException("Configuration for PipeSshAgent is missing");
-            }
+        //    if (options == null ||
+        //        options.PipeName == null)
+        //    {
+        //        throw new InvalidOperationException("Configuration for PipeSshAgent is missing");
+        //    }
 
-            await using var stream = new NamedPipeClientStream(options.PipeName);
-            await stream.ConnectAsync(1000, token);
-            await using var streamConnection = new SshAgentStreamConnection(stream);
+        //    await using var stream = new NamedPipeClientStream(options.PipeName);
+        //    await stream.ConnectAsync(1000, token);
+        //    await using var streamConnection = new StreamSshAgentHostConnection(stream);
 
-            return await requestFunc(streamConnection);
-        }
+        //    return await requestFunc(streamConnection);
+        //}
     }
 }

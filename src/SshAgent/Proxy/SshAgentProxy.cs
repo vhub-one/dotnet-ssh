@@ -1,24 +1,47 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Common.Service;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using SshAgent.Contract;
 
-namespace SshAgent
+namespace SshAgent.Proxy
 {
-    public class SshAgentAggregator : ISshAgent
+    public class SshAgentProxy : ISshAgent
     {
-        private readonly ILogger<SshAgentAggregator> _logger;
-        private readonly ISshAgent[] _agents;
+        private readonly IServiceMap<ISshAgent> _services;
+        private readonly IOptions<SshAgentProxyOptions> _optionsAccessor;
+        private readonly ILogger<SshAgentProxy> _logger;
 
-        public SshAgentAggregator(ILogger<SshAgentAggregator> logger, params ISshAgent[] agents)
+        public SshAgentProxy(IServiceMap<ISshAgent> services, IOptions<SshAgentProxyOptions> optionsAccessor, ILogger<SshAgentProxy> logger)
         {
+            _services = services;
+            _optionsAccessor = optionsAccessor;
             _logger = logger;
-            _agents = agents;
+        }
+
+        public IEnumerable<ISshAgent> Agents
+        {
+            get
+            {
+                var options = _optionsAccessor.Value;
+
+                if (options == null ||
+                    options.SshAgentsOrder == null)
+                {
+                    throw new InvalidOperationException("Configuration is missing for [SshAgentAggregatorOptions]");
+                }
+
+                foreach (var agentName in options.SshAgentsOrder)
+                {
+                    yield return _services.Get(agentName);
+                }
+            }
         }
 
         public async ValueTask<IdentitiesReply> RequestIdentitiesAsync(CancellationToken token)
         {
             var replyKeys = new Dictionary<string, IdentityKey>();
 
-            foreach (var agent in _agents)
+            foreach (var agent in Agents)
             {
                 var agentIdentities = default(IdentitiesReply);
 
@@ -53,9 +76,8 @@ namespace SshAgent
 
         public async ValueTask<SignReply> SignAsync(SignRequest signRequest, CancellationToken token)
         {
-            foreach (var agent in _agents)
+            foreach (var agent in Agents)
             {
-
                 var agentIdentities = default(IdentitiesReply);
 
                 try

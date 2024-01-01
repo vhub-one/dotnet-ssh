@@ -17,6 +17,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{C44185
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "modules\dotnet-common\src\Common\Common.csproj", "{19F1B9C5-22A2-48C8-94D2-D656C17D4D3C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SshAgentProxyService", "src\SshAgentProxyService\SshAgentProxyService\SshAgentProxyService.csproj", "{74FEA364-B377-4241-81C7-342BCE97B351}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.Hosting", "modules\dotnet-common\src\Common.Hosting\Common.Hosting.csproj", "{34A1E271-01C2-41EE-AD53-6C2F69C0EB29}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SshAgent.Transport.UnixSocket", "src\SshAgent.Transport.UnixSocket\SshAgent.Transport.UnixSocket.csproj", "{5DEE8085-6F39-4FC5-BDCD-21AD94E5B8B1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SshAgent.Transport.Socket", "src\SshAgent.Transport.Socket\SshAgent.Transport.Socket.csproj", "{9836B15E-80C8-4EFB-81D2-6D7894C4AB19}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +47,22 @@ Global
 		{19F1B9C5-22A2-48C8-94D2-D656C17D4D3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{19F1B9C5-22A2-48C8-94D2-D656C17D4D3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{19F1B9C5-22A2-48C8-94D2-D656C17D4D3C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74FEA364-B377-4241-81C7-342BCE97B351}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74FEA364-B377-4241-81C7-342BCE97B351}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74FEA364-B377-4241-81C7-342BCE97B351}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74FEA364-B377-4241-81C7-342BCE97B351}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34A1E271-01C2-41EE-AD53-6C2F69C0EB29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34A1E271-01C2-41EE-AD53-6C2F69C0EB29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34A1E271-01C2-41EE-AD53-6C2F69C0EB29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34A1E271-01C2-41EE-AD53-6C2F69C0EB29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DEE8085-6F39-4FC5-BDCD-21AD94E5B8B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DEE8085-6F39-4FC5-BDCD-21AD94E5B8B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DEE8085-6F39-4FC5-BDCD-21AD94E5B8B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DEE8085-6F39-4FC5-BDCD-21AD94E5B8B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9836B15E-80C8-4EFB-81D2-6D7894C4AB19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9836B15E-80C8-4EFB-81D2-6D7894C4AB19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9836B15E-80C8-4EFB-81D2-6D7894C4AB19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9836B15E-80C8-4EFB-81D2-6D7894C4AB19}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -48,6 +72,9 @@ Global
 		{40EC0D6A-275B-4A3E-92A5-57C1D34B4826} = {17729F04-7ECF-41F8-A3EF-F1D00242A22B}
 		{F5C4A634-03AB-4383-A431-9EBA3DA036F8} = {17729F04-7ECF-41F8-A3EF-F1D00242A22B}
 		{19F1B9C5-22A2-48C8-94D2-D656C17D4D3C} = {C4418523-8936-4059-AB10-FF08AA7C0871}
+		{34A1E271-01C2-41EE-AD53-6C2F69C0EB29} = {C4418523-8936-4059-AB10-FF08AA7C0871}
+		{5DEE8085-6F39-4FC5-BDCD-21AD94E5B8B1} = {17729F04-7ECF-41F8-A3EF-F1D00242A22B}
+		{9836B15E-80C8-4EFB-81D2-6D7894C4AB19} = {17729F04-7ECF-41F8-A3EF-F1D00242A22B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {22555449-9889-4B8F-B924-64B044B3208F}

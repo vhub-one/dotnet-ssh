@@ -5,11 +5,11 @@ using System.Buffers.Binary;
 
 namespace SshAgent.Transport
 {
-    public class SshAgentStreamConnection : ISshAgentConnection
+    public class StreamSshAgentHostConnection : ISshAgentHostConnection
     {
         private readonly Stream _stream;
 
-        public SshAgentStreamConnection(Stream stream)
+        public StreamSshAgentHostConnection(Stream stream)
         {
             _stream = stream;
         }

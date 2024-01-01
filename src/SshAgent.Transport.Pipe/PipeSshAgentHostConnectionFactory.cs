@@ -5,23 +5,23 @@ using System.Security.Principal;
 
 namespace SshAgent.Transport.Pipe
 {
-    public class PipeSshAgentConnectionFactory : ISshAgentConnectionFactory
+    public class PipeSshAgentHostConnectionFactory : ISshAgentHostConnectionFactory
     {
-        private readonly IOptions<PipeSshAgentConnectionFactoryOptions> _optionsAccessor;
+        private readonly IOptions<PipeSshAgentHostConnectionFactoryOptions> _optionsAccessor;
 
-        public PipeSshAgentConnectionFactory(IOptions<PipeSshAgentConnectionFactoryOptions> optionsAccessor)
+        public PipeSshAgentHostConnectionFactory(IOptions<PipeSshAgentHostConnectionFactoryOptions> optionsAccessor)
         {
             _optionsAccessor = optionsAccessor;
         }
 
-        public async ValueTask<ISshAgentConnection> AcceptAsync(CancellationToken token)
+        public async ValueTask<ISshAgentHostConnection> AcceptAsync(CancellationToken token)
         {
             var pipeOptions = _optionsAccessor.Value;
 
             if (pipeOptions == null ||
                 pipeOptions.PipeName == null)
             {
-                throw new InvalidOperationException("Configuration for PipeSshAgentConnectionFactory is missing");
+                throw new InvalidOperationException("Configuration for PipeSshAgentHostConnectionFactory is missing");
             }
 
             var pipeUser = WindowsIdentity.GetCurrent();
@@ -67,7 +67,7 @@ namespace SshAgent.Transport.Pipe
                 throw;
             }
 
-            return new SshAgentStreamConnection(pipe);
+            return new StreamSshAgentHostConnection(pipe);
         }
     }
 }

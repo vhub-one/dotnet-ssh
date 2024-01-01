@@ -1,7 +1,7 @@
 ﻿
 namespace SshAgent.Transport.Pipe
 {
-    public class PipeSshAgentOptions
+    public class PipeSshAgentClientOptions
     {
         public string PipeName { get; set; }
     }
