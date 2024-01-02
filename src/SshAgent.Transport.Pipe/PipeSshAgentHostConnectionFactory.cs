@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Options;
 using System.IO.Pipes;
+using System.Runtime.CompilerServices;
 using System.Security.AccessControl;
 using System.Security.Principal;
 
@@ -14,7 +15,7 @@ namespace SshAgent.Transport.Pipe
             _optionsAccessor = optionsAccessor;
         }
 
-        public async ValueTask<ISshAgentHostConnection> AcceptAsync(CancellationToken token)
+        public async IAsyncEnumerable<ISshAgentHostConnection> AcceptAsync([EnumeratorCancellation] CancellationToken token)
         {
             var pipeOptions = _optionsAccessor.Value;
 
@@ -42,32 +43,37 @@ namespace SshAgent.Transport.Pipe
                 pipeSecurityRule
             );
 
-            // Create new pipe
-            var pipe = NamedPipeServerStreamAcl.Create(
-                pipeOptions.PipeName,
-                PipeDirection.InOut,
-                NamedPipeServerStream.MaxAllowedServerInstances,
-                PipeTransmissionMode.Byte,
-                PipeOptions.WriteThrough | PipeOptions.Asynchronous,
-                0,
-                0,
-                pipeSecurity
-            );
-
-            try
+            while (true)
             {
-                await pipe.WaitForConnectionAsync(token);
-            }
-            catch
-            {
-                // Unable to accept new connection => release pipe stream
-                await pipe.DisposeAsync();
+                token.ThrowIfCancellationRequested();
 
-                // Propagate it up
-                throw;
-            }
+                // Create new pipe
+                var pipe = NamedPipeServerStreamAcl.Create(
+                    pipeOptions.PipeName,
+                    PipeDirection.InOut,
+                    NamedPipeServerStream.MaxAllowedServerInstances,
+                    PipeTransmissionMode.Byte,
+                    PipeOptions.WriteThrough | PipeOptions.Asynchronous,
+                    0,
+                    0,
+                    pipeSecurity
+                );
 
-            return new StreamSshAgentHostConnection(pipe);
+                try
+                {
+                    await pipe.WaitForConnectionAsync(token);
+                }
+                catch
+                {
+                    // Unable to accept new connection => release pipe stream
+                    await pipe.DisposeAsync();
+
+                    // Propagate it up
+                    throw;
+                }
+
+                yield return new StreamSshAgentHostConnection(pipe);
+            }
         }
     }
 }

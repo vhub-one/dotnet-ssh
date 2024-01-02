@@ -8,10 +8,17 @@ namespace SshAgent.Transport
     public class StreamSshAgentHostConnection : ISshAgentHostConnection
     {
         private readonly Stream _stream;
+        private readonly string _streamId;
 
         public StreamSshAgentHostConnection(Stream stream)
         {
             _stream = stream;
+            _streamId = Guid.NewGuid().ToString();
+        }
+
+        public string ConnectionId 
+        {
+            get { return _streamId; }
         }
 
         public async ValueTask<AgentMessage> ReadMessageAsync(CancellationToken token)

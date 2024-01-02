@@ -13,6 +13,7 @@ namespace SshAgent
         private readonly ILogger<SshAgentService> _logger;
 
         private readonly TimeSpan _timeout = TimeSpan.FromMinutes(1);
+        private readonly ConcurrentDictionary<string, Task> _connections = new();
 
         public SshAgentService(ISshAgent agent, ISshAgentHostConnectionFactory agentConnectionFactory, ILogger<SshAgentService> logger)
         {
@@ -24,29 +25,24 @@ namespace SshAgent
 
         public async ValueTask RunAsync(CancellationToken token = default)
         {
-            var connectionTaskSet = new ConcurrentDictionary<Task, object>();
-
             try
             {
-                while (true)
+                var connections = _agentConnectionFactory.AcceptAsync(token);
+
+                await foreach (var connection in connections)
                 {
-                    var connection = await _agentConnectionFactory.AcceptAsync(token);
-                    var connectionTask = Task.Run(() => RunConnectionHandlerAsync(connection, token), token);
+                    Task RunHandlerAsync()
+                    {
+                        return RunConnectionHandlerAsync(connection, token);
+                    }
 
-                    // Collect active tasks
-                    connectionTaskSet.TryAdd(connectionTask, null);
-
-                    // Remove task when one is complete
-                    _ = connectionTask.ContinueWith(
-                        task => connectionTaskSet.TryRemove(connectionTask, out _),
-                        token
-                    );
+                    _connections[connection.ConnectionId] = Task.Run(RunHandlerAsync, token);
                 }
             }
             finally
             {
                 // Wait until all tasks are complete
-                await Task.WhenAll(connectionTaskSet.Keys);
+                await Task.WhenAll(_connections.Values);
             }
         }
 
@@ -140,8 +136,10 @@ namespace SshAgent
             }
             finally
             {
-                _logger.LogInformation("< client disconnected");
+                _connections.TryRemove(connection.ConnectionId, out _);
             }
+
+            _logger.LogInformation("< client disconnected");
         }
 
         private async ValueTask<AgentMessage> HandleIdentitiesRequestAsync(AgentMessage _, CancellationToken token)

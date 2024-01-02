@@ -1,10 +1,9 @@
 ﻿using Microsoft.Extensions.Options;
+using System.Net;
+using System.Net.Sockets;
 
-namespace SshAgent.Transport.Socket
+namespace SshAgent.Transport.TcpSocket
 {
-    using System.Net;
-    using System.Net.Sockets;
-
     public class SocketSshAgentClient : StreamSshAgentClient
     {
         private readonly IOptions<SocketSshAgentClientOptions> _optionsAccessor;
@@ -26,7 +25,7 @@ namespace SshAgent.Transport.Socket
 
             var endpoint = new DnsEndPoint(options.Host, options.Port);
 
-            using var socket = new Socket(AddressFamily.Unix, SocketType.Stream, ProtocolType.IP);
+            using var socket = new Socket(endpoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
 
             await socket.ConnectAsync(endpoint, token);
             await using var socketStream = new NetworkStream(socket);

@@ -1,4 +1,5 @@
-﻿namespace SshAgent.Transport.Socket
+﻿
+namespace SshAgent.Transport.TcpSocket
 {
     public class SocketSshAgentClientOptions
     {
