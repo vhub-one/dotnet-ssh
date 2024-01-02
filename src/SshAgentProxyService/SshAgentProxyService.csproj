@@ -16,8 +16,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\SshAgent.Transport.Pipe\SshAgent.Transport.Pipe.csproj" />
-    <ProjectReference Include="..\..\SshAgent.Transport.Socket\SshAgent.Transport.Socket.csproj" />
+    <ProjectReference Include="..\SshAgent.Transport.Pipe\SshAgent.Transport.Pipe.csproj" />
+    <ProjectReference Include="..\SshAgent.Transport.TcpSocket\SshAgent.Transport.TcpSocket.csproj" />
   </ItemGroup>
 
   <ItemGroup>

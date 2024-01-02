@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Hosting;
 using SshAgent;
 
-namespace SshAgentProxyService.SshAgentProxyService
+namespace SshAgentProxyService
 {
     public class SshAgentProxyBackgroundService : BackgroundService
     {

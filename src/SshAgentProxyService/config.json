@@ -1,11 +1,5 @@
 {
-  "Logging": {
-    "LogLevel": {
-      "Default": "Debug",
-      "Microsoft": "Warning",
-      "System": "Warning"
-    }
-  },
+  /* OUTGOING CONNECTIONS */
   "PipeSshAgentClientOptions": {
     "PipeName": "openssh-ssh-agent"
   },
@@ -19,7 +13,20 @@
       "PipeSshAgentClient"
     ]
   },
+  /* INCOMING CONNECTIONS */
   "PipeSshAgentHostConnectionFactoryOptions": {
     "PipeName": "proxy-ssh-agent"
+  },
+  "SocketSshAgentHostConnectionFactoryOptions": {
+    "Host": "localhost",
+    "Port": 33022
+  },
+  /* LOGGING */
+  "Logging": {
+    "LogLevel": {
+      "Default": "Debug",
+      "Microsoft": "Warning",
+      "System": "Warning"
+    }
   }
 }

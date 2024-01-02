@@ -24,7 +24,15 @@ namespace SshAgent.Transport.TcpSocket
                 throw new InvalidOperationException("Configuration for SocketSshAgentHostConnectionFactory is missing");
             }
 
-            var endpoint = new DnsEndPoint(options.Host, options.Port);
+            var endpointHosts = await Dns.GetHostAddressesAsync(options.Host, token);
+            var endpointHost = endpointHosts.FirstOrDefault();
+
+            if (endpointHost == null)
+            {
+                throw new InvalidOperationException("Unable to resolve host address");
+            }
+
+            var endpoint = new IPEndPoint(endpointHost, options.Port);
 
             using var socket = new Socket(endpoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
 
