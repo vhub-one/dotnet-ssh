@@ -21,6 +21,12 @@
     "Host": "localhost",
     "Port": 33022
   },
+  "SshAgentConnectionFactoryProxyOptions": {
+    "SshAgents": [
+      "SocketSshAgentHostConnectionFactory",
+      "PipeSshAgentHostConnectionFactory"
+    ]
+  },
   /* LOGGING */
   "Logging": {
     "LogLevel": {
